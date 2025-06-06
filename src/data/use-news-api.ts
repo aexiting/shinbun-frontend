@@ -1,4 +1,4 @@
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 const BACK_END_ROUTE = '/news'
 
@@ -7,7 +7,7 @@ export interface NewsQuery {
 }
 
 export interface NewsRequest {
-    status: boolean;
+    status: string;
 }
 
 export interface NewsDataState {
@@ -51,6 +51,11 @@ export const useNewsData = (query: string): [NewsDataState, NewsDataActions] => 
             console.error(`Error caused when fetching News Data: ${e}`)
         }
     }, [query])
+
+    useEffect(() => {
+        makeRequest();
+    }, [makeRequest]);
+
 
     return [state, {makeRequest}]
 }
